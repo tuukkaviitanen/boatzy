@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Title from './components/Title';
 
 const App = () => {
   return (
     <Box>
-      <Typography variant="h1">Hello, world!</Typography>
+      <Title/>
     </Box>
   );
 };
