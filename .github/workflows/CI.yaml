@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  verification:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 5
+
+    steps:
+      - name: Fetch code
+        uses: actions/checkout@v4
+
+      - name: Install Node
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: "22.x"
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm ci
+
+      - name: Run Lint
+        working-directory: ./client
+        run: npm run lint
+
+      - name: Run Build
+        working-directory: ./client
+        run: npm run build
+
+  tag_release:
+    needs: ["verification"]
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.70.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
