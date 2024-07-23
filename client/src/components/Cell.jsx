@@ -1,13 +1,20 @@
+import { TableCell, Typography } from '@mui/material';
+
 const styles = {
   cell: {
     border: '1px solid black',
-    margin: '0',
-    padding: '5px',
+    p: 0.5,
+    minWidth: { xs: 70, sm: 100 },
+    textAlign: 'center',
   },
 };
 
 function Cell(params) {
-  return <td style={styles.cell}>{params.children}</td>;
+  return (
+    <TableCell sx={styles.cell}>
+      <Typography>{params.children}</Typography>
+    </TableCell>
+  );
 }
 
 export default Cell;

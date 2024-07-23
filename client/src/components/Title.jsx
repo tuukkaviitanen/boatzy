@@ -1,11 +1,21 @@
 import { Box, Typography } from '@mui/material';
 
-const styles = {textAlign:'center', color: 'red'}
+const styles = {
+  title: { textAlign: 'center', color: 'red' },
+  container: {
+    p: 2,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+};
 
 function Title() {
   return (
-    <Box>
-      <Typography variant="h2" sx={styles}>Boatzy</Typography>
+    <Box sx={styles.container}>
+      <Typography variant="h2" sx={styles}>
+        Boatzy
+      </Typography>
     </Box>
   );
 }
