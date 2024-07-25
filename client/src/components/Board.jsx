@@ -38,6 +38,32 @@ function Board() {
     setUserValue(userIndex, rowIndex, value);
     nextRound();
   };
+
+  function renderValueOption(userIndex, rowIndex, selectable) {
+    const value = dices.reduce((sum, num) => sum + num, 0);
+    return selectable ? (
+      <Button onClick={() => onCellClicked(userIndex, rowIndex, value)}>
+        {value}
+      </Button>
+    ) : (
+      <>{value}</>
+    );
+  }
+
+  function renderValueCell(user, rowIndex, userIndex) {
+    const value = user.column[rowIndex].value;
+    const isRoundActive = turn === userIndex;
+    const isGenerated = rows[rowIndex].generated;
+
+    return (
+      <Cell key={user.id}>
+        {value ??
+          ((isGenerated && renderValueOption(userIndex, rowIndex, false)) ||
+            (isRoundActive && renderValueOption(userIndex, rowIndex, true)))}
+      </Cell>
+    );
+  }
+
   return (
     <Box sx={styles.container}>
       <table style={styles.table}>
@@ -54,24 +80,9 @@ function Board() {
                 <Cell>
                   <TextWithInlineDice>{row.title}</TextWithInlineDice>
                 </Cell>
-                {users.map((user, userIndex) => (
-                  <Cell key={user.id}>
-                    {user.column[rowIndex]?.value ??
-                      (turn === userIndex && (
-                        <Button
-                          onClick={() =>
-                            onCellClicked(
-                              userIndex,
-                              rowIndex,
-                              dices.reduce((sum, num) => sum + num, 0),
-                            )
-                          }
-                        >
-                          {dices.reduce((sum, num) => sum + num, 0)}
-                        </Button>
-                      ))}
-                  </Cell>
-                ))}
+                {users.map((user, userIndex) =>
+                  renderValueCell(user, rowIndex, userIndex),
+                )}
               </tr>
             );
           })}
