@@ -1,8 +1,8 @@
 class Row {
   /**
    *
-   * @param {String} title
-   * @param {String} name
+   * @param {string} title
+   * @param {string} name
    * @param {(cell: number, column: number[]) => number} rule
    */
   constructor(title, name, rule) {
