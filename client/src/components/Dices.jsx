@@ -1,23 +1,23 @@
 import { Box } from '@mui/material';
-import Dice from './Dice';
+import DiceButton from './DiceButton';
 
 const styles = {
   container: {
     display: 'flex',
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    p: { xs: 0, md: 2 },
   },
 };
 
 const Dices = () => {
   return (
     <Box sx={styles.container}>
-      <Dice number={1} />
-      <Dice number={2} />
-      <Dice number={3} />
-      <Dice number={4} />
-      <Dice number={5} />
+      <DiceButton />
+      <DiceButton />
+      <DiceButton />
+      <DiceButton />
+      <DiceButton />
     </Box>
   );
 };

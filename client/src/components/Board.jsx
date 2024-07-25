@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import Cell from './Cell';
+import TextWithInlineDice from './TextWithInlineDice';
 
 const styles = {
   container: {
@@ -14,25 +15,26 @@ const styles = {
 };
 
 const rows = [
-  'first',
-  'second',
-  'third',
-  'fourth',
-  'fifth',
-  'sixth',
-  'seventh',
-  'eighth',
-  'ninth',
-  'tenth',
-  'eleventh',
-  'twelfth',
-  'thirteenth',
-  'fourteenth',
-  'fifteenth',
-  'sixteenth',
-  'seventeenth',
-  'eighteenth',
+  '11111',
+  '22222',
+  '33333',
+  '44444',
+  '55555',
+  '66666',
+  'Total',
+  'Bonus',
+  '66',
+  '55\t66',
+  '666',
+  '5555',
+  '12345',
+  '23456',
+  '55566',
+  '00000',
+  'Boatzy',
+  'Total',
 ];
+
 const users = ['player 1', 'player 2', 'player 3', 'player 4'];
 
 function Board() {
@@ -46,10 +48,12 @@ function Board() {
               <Cell key={user}>{user}</Cell>
             ))}
           </tr>
-          {rows.map((row) => {
+          {rows.map((row, index) => {
             return (
-              <tr key={row}>
-                <Cell>{row}</Cell>
+              <tr key={index}>
+                <Cell>
+                  <TextWithInlineDice>{row}</TextWithInlineDice>
+                </Cell>
                 {users.map((user) => (
                   <Cell key={user} />
                 ))}
