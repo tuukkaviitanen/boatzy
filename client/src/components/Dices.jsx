@@ -1,5 +1,7 @@
 import { Box } from '@mui/material';
 import DiceButton from './DiceButton';
+import { useContext } from 'react';
+import { DiceContext } from '../contexts/DiceContext';
 
 const styles = {
   container: {
@@ -11,13 +13,13 @@ const styles = {
 };
 
 const Dices = () => {
+  const [dices] = useContext(DiceContext);
+
   return (
     <Box sx={styles.container}>
-      <DiceButton />
-      <DiceButton />
-      <DiceButton />
-      <DiceButton />
-      <DiceButton />
+      {dices.map((_, index) => (
+        <DiceButton key={index} index={index} />
+      ))}
     </Box>
   );
 };
