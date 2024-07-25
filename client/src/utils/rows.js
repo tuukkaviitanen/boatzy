@@ -7,8 +7,8 @@ const rows = [
   new Row('44444', 'Fours'),
   new Row('55555', 'Fives'),
   new Row('66666', 'Sixes'),
-  new Row('Total', 'Upper Section Total'),
-  new Row('Bonus', 'Bonus'),
+  new Row('Total', 'Upper Section Total', undefined, true),
+  new Row('Bonus', 'Bonus', undefined, true),
   new Row('66', 'One Pair'),
   new Row('55\t66', 'Two Pairs'),
   new Row('666', 'Three of a Kind'),
@@ -18,7 +18,7 @@ const rows = [
   new Row('55566', 'Full House'),
   new Row('00000', 'Chance'),
   new Row('Boatzy', 'Boatzy'),
-  new Row('Total', 'Full Total'),
+  new Row('Total', 'Full Total', undefined, true),
 ];
 
 export default rows;
