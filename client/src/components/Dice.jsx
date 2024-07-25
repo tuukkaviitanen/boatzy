@@ -1,18 +1,17 @@
-import { Button } from '@mui/material';
+import diceZero from '../assets/dice-zero.svg';
 import diceOne from '../assets/dice-one.svg';
 import diceTwo from '../assets/dice-two.svg';
 import diceThree from '../assets/dice-three.svg';
 import diceFour from '../assets/dice-four.svg';
 import diceFive from '../assets/dice-five.svg';
 import diceSix from '../assets/dice-six.svg';
+import Image from './Image';
 
 const styles = {
   image: {
-    height: 100,
-    width: 100,
     pointerEvents: 'none',
+    width: '100%',
   },
-  container: {},
 };
 
 const selectIcon = (number) => {
@@ -30,18 +29,14 @@ const selectIcon = (number) => {
     case 6:
       return diceSix;
     default:
-      return null;
+      return diceZero;
   }
 };
 
-const Dice = ({ number }) => {
+const Dice = ({ number, sx }) => {
   const image = selectIcon(number);
 
-  return (
-    <Button sx={styles.container}>
-      <img style={styles.image} src={image} />
-    </Button>
-  );
+  return <Image src={image} sx={{ ...styles.image, ...sx }} />;
 };
 
 export default Dice;
