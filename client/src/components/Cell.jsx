@@ -6,6 +6,7 @@ const styles = {
     p: 0.5,
     minWidth: { xs: 70, sm: 100 },
     textAlign: 'center',
+    height: 37,
   },
 };
 

@@ -31,25 +31,9 @@ export const UserContextProvider = ({ children }) => {
     [users],
   );
 
-  const setUserTempValue = useCallback(
-    (userIndex, rowIndex, tempValue) => {
-      setUsers(
-        Object.assign([], users, {
-          [userIndex]: {
-            ...users[userIndex],
-            column: Object.assign([], users[userIndex].column, {
-              [rowIndex]: { tempValue },
-            }),
-          },
-        }),
-      );
-    },
-    [users],
-  );
-
   const contextValues = useMemo(
-    () => [users, { createUser, setUserValue, setUserTempValue }],
-    [users, createUser, setUserValue, setUserTempValue],
+    () => [users, { createUser, setUserValue }],
+    [users, createUser, setUserValue],
   );
 
   return (

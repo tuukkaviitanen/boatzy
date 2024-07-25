@@ -8,7 +8,7 @@ class User {
    */
   constructor(name) {
     this.name = name;
-    this.column = rows.map(() => ({ value: null, tempValue: null }));
+    this.column = rows.map(() => ({ value: null }));
     this.id = uuid.v7();
   }
   /**
