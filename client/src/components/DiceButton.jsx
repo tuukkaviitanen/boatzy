@@ -12,6 +12,8 @@ const DiceButton = ({ index }) => {
   const diceState = dices[index];
 
   const onButtonClick = () => {
+    navigator.vibrate?.(100); // Vibrate mobile device for physical feedback
+
     if (diceState >= 6) {
       return setDice(index, 0);
     }
