@@ -9,7 +9,6 @@ export const DiceContextProvider = ({ children }) => {
 
   const setDice = useCallback(
     (index, newState) => {
-      navigator.vibrate(100); // Vibrate mobile device for physical feedback
       setDices(Object.assign([], dices, { [index]: newState }));
     },
     [dices],
