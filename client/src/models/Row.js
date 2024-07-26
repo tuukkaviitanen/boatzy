@@ -3,7 +3,7 @@ class Row {
    *
    * @param {string} title
    * @param {string} name
-   * @param {(dices: number[], column: number[]) => number} rule
+   * @param {(dices: number[], column: {value: number}[]) => number} rule
    * @param {boolean} generated
    */
   constructor(title, name, rule, generated = false) {

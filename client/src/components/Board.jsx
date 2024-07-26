@@ -39,8 +39,8 @@ function Board() {
     nextRound();
   };
 
-  function renderValueOption(userIndex, rowIndex, selectable) {
-    const value = dices.reduce((sum, num) => sum + num, 0);
+  function renderValueOption(userIndex, rowIndex, selectable, user) {
+    const value = rows[rowIndex].rule(dices, user.column);
     return selectable ? (
       <Button onClick={() => onCellClicked(userIndex, rowIndex, value)}>
         {value}
@@ -58,8 +58,10 @@ function Board() {
     return (
       <Cell key={user.id}>
         {value ??
-          ((isGenerated && renderValueOption(userIndex, rowIndex, false)) ||
-            (isRoundActive && renderValueOption(userIndex, rowIndex, true)))}
+          ((isGenerated &&
+            renderValueOption(userIndex, rowIndex, false, user)) ||
+            (isRoundActive &&
+              renderValueOption(userIndex, rowIndex, true, user)))}
       </Cell>
     );
   }
