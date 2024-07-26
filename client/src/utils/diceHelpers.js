@@ -45,7 +45,5 @@ export const findFullHouse = (array) => {
 
   const isFullHouse = counts && counts.includes(2) && counts.includes(3);
 
-  console.log({ counts, isFullHouse, filteredGroups, grouped });
-
   return isFullHouse ? sum(array) : 0;
 };
