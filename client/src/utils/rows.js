@@ -1,6 +1,6 @@
 import Row from '../models/Row';
 import arraysEqual from './arraysEqual';
-import { findTwoPairs, findNOfAKind } from './diceHelpers';
+import { findTwoPairs, findNOfAKind, findFullHouse } from './diceHelpers';
 import sum from './sum';
 
 const calculateBonus = (column) =>
@@ -32,7 +32,7 @@ const rows = [
   new Row('23456', 'Large Straight', (dices) =>
     arraysEqual([2, 3, 4, 5, 6], dices) ? sum(dices) : 0,
   ),
-  new Row('55566', 'Full House', () => undefined),
+  new Row('55566', 'Full House', (dices) => findFullHouse(dices)),
   new Row('00000', 'Chance', (dices) => sum(dices)),
   new Row('Boatzy', 'Boatzy', (dices) => findNOfAKind(dices, 5)),
   new Row(

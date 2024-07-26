@@ -33,3 +33,19 @@ export const findNOfAKind = (array, n) => {
 
   return sum;
 };
+
+export const findFullHouse = (array) => {
+  const grouped = Object.groupBy(array, (number) => number);
+
+  const filteredGroups = Object.entries(grouped).filter(([key]) => key > 0);
+
+  const counts =
+    filteredGroups.length === 2 &&
+    filteredGroups.map(([, groups]) => groups.length);
+
+  const isFullHouse = counts && counts.includes(2) && counts.includes(3);
+
+  console.log({ counts, isFullHouse, filteredGroups, grouped });
+
+  return isFullHouse ? sum(array) : 0;
+};
