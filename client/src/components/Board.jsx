@@ -2,16 +2,20 @@ import { Box, Button } from '@mui/material';
 import Cell from './Cell';
 import TextWithInlineDice from './TextWithInlineDice';
 import rows from '../utils/rows';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { DiceContext } from '../contexts/DiceContext';
+import { GameContext } from '../contexts/GameContext';
 
 const styles = {
   container: {
     flex: 4,
-    overflow: 'auto',
+    overflow: 'hidden',
     display: 'flex',
-    justifyContent: 'space-evenly',
+    justifyContent: 'center',
+  },
+  innerContainer: {
+    overflow: 'auto',
   },
   table: {
     borderSpacing: '0',
@@ -21,46 +25,31 @@ const styles = {
 const maxInputRows = rows.filter((row) => !row.generated).length;
 
 function Board() {
-  const [users, { setUserValue, createUser }] = useContext(UserContext);
+  const [users, { setUserValue, resetUsers }] = useContext(UserContext);
   const [dices, { resetDices }] = useContext(DiceContext);
-  const [round, setRound] = useState(1);
-  const [turn, setTurn] = useState(0);
-
-  console.log({ turn });
+  const [{ turn, round }, { nextTurn, resetGame }] = useContext(GameContext);
 
   const currentUser = users[turn];
 
   const userFilledCells = (user) =>
     user.column.filter(({ value }) => value !== null).length;
 
-  const nextRound = useCallback(() => {
-    resetDices();
-    if (userFilledCells(currentUser) + 1 < round) {
-      return;
-    }
-
-    if (turn + 1 >= users.length) {
-      setRound(round + 1);
-      setTurn(0);
-    } else {
-      setTurn(turn + 1);
-    }
-  }, [currentUser, resetDices, round, turn, users.length]);
-
   useEffect(() => {
-    console.log({
-      userFilled: userFilledCells(currentUser),
-      maxInputRows,
-      round,
-    });
-    if (userFilledCells(currentUser) >= maxInputRows) {
-      nextRound();
+    if (users.every((user) => userFilledCells(user) >= maxInputRows)) {
+      resetGame();
+      resetUsers();
+    } else if (userFilledCells(currentUser) >= maxInputRows) {
+      nextTurn();
     }
-  }, [currentUser, nextRound]);
+  }, [currentUser, nextTurn, resetGame, resetUsers, users]);
 
   const onCellClicked = (userIndex, rowIndex, value) => {
     setUserValue(userIndex, rowIndex, value);
-    nextRound();
+    resetDices();
+
+    if (round <= userFilledCells(users[userIndex])) {
+      nextTurn();
+    }
   };
 
   function renderValueOption(userIndex, rowIndex, selectable, user) {
@@ -92,7 +81,7 @@ function Board() {
 
   return (
     <Box sx={styles.container}>
-      <Box>
+      <Box sx={styles.innerContainer}>
         <table style={styles.table}>
           <tbody>
             <tr>
@@ -100,13 +89,6 @@ function Board() {
               {users.map((user) => (
                 <Cell key={user.id}>{user.name}</Cell>
               ))}
-              <Cell>
-                <Button
-                  onClick={() => createUser(`Player ${users.length + 1}`)}
-                >
-                  Add
-                </Button>
-              </Cell>
             </tr>
             {rows.map((row, rowIndex) => {
               return (
@@ -117,7 +99,6 @@ function Board() {
                   {users.map((user, userIndex) =>
                     renderValueCell(user, rowIndex, userIndex),
                   )}
-                  <Cell />
                 </tr>
               );
             })}
