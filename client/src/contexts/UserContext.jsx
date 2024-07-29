@@ -10,7 +10,7 @@ export const UserContextProvider = ({ children }) => {
 
   const createUser = useCallback(
     (name) => {
-      setUsers(...users, new User(name));
+      setUsers([...users, new User(name)]);
     },
     [users],
   );
