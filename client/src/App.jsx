@@ -2,6 +2,7 @@ import Title from './components/Title';
 import Board from './components/Board';
 import { Container } from '@mui/material';
 import Dices from './components/Dices';
+import Buttons from './components/Buttons';
 
 const styles = {
   appContainer: {
@@ -16,6 +17,7 @@ const App = () => {
   return (
     <Container sx={styles.appContainer}>
       <Title />
+      <Buttons />
       <Board />
       <Dices />
     </Container>

@@ -8,12 +8,15 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { DiceContextProvider } from './contexts/DiceContext';
 import { UserContextProvider } from './contexts/UserContext';
+import { GameContextProvider } from './contexts/GameContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <DiceContextProvider>
       <UserContextProvider>
-        <App />
+        <GameContextProvider>
+          <App />
+        </GameContextProvider>
       </UserContextProvider>
     </DiceContextProvider>
   </React.StrictMode>,

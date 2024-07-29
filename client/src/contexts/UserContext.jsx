@@ -10,7 +10,7 @@ export const UserContextProvider = ({ children }) => {
 
   const createUser = useCallback(
     (name) => {
-      setUsers(...users, new User(name));
+      setUsers([...users, new User(name)]);
     },
     [users],
   );
@@ -31,9 +31,13 @@ export const UserContextProvider = ({ children }) => {
     [users],
   );
 
+  const resetUsers = useCallback(() => {
+    setUsers(initialState);
+  }, []);
+
   const contextValues = useMemo(
-    () => [users, { createUser, setUserValue }],
-    [users, createUser, setUserValue],
+    () => [users, { createUser, setUserValue, resetUsers }],
+    [users, createUser, setUserValue, resetUsers],
   );
 
   return (
