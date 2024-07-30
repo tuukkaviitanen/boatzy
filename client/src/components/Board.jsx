@@ -13,9 +13,12 @@ const styles = {
     overflow: 'hidden',
     display: 'flex',
     justifyContent: 'center',
+    m: 1,
   },
   innerContainer: {
     overflow: 'auto',
+    scrollbarWidth: 'thin',
+    py: 1,
   },
   table: {
     borderSpacing: '0',
@@ -27,7 +30,7 @@ const maxInputRows = rows.filter((row) => !row.generated).length;
 function Board() {
   const [users, { setUserValue, resetUsers }] = useContext(UserContext);
   const [dices, { resetDices }] = useContext(DiceContext);
-  const [{ turn, round }, { nextTurn, resetGame }] = useContext(GameContext);
+  const [{ turn, round }, { nextTurn, endGame }] = useContext(GameContext);
 
   const currentUser = users[turn];
 
@@ -36,12 +39,11 @@ function Board() {
 
   useEffect(() => {
     if (users.every((user) => userFilledCells(user) >= maxInputRows)) {
-      resetGame();
-      resetUsers();
+      endGame();
     } else if (userFilledCells(currentUser) >= maxInputRows) {
       nextTurn();
     }
-  }, [currentUser, nextTurn, resetGame, resetUsers, users]);
+  }, [currentUser, endGame, nextTurn, resetUsers, users]);
 
   const onCellClicked = (userIndex, rowIndex, value) => {
     setUserValue(userIndex, rowIndex, value);
