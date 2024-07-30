@@ -13,14 +13,28 @@ const styles = {
 
 const Buttons = () => {
   const [users, { createUser }] = useContext(UserContext);
-  const [, { nextTurn }] = useContext(GameContext);
+  const [game, { nextTurn, resetGame }] = useContext(GameContext);
 
   return (
     <Box sx={styles.container}>
-      <Button onClick={() => createUser(`Player ${users.length + 1}`)}>
-        Add player
+      {!game.gameEnded && (
+        <>
+          <Button onClick={() => createUser(`Player ${users.length + 1}`)}>
+            Add player
+          </Button>
+          <Button onClick={() => nextTurn()}>Skip turn</Button>
+        </>
+      )}
+
+      <Button
+        onClick={() => {
+          if (confirm('Are you sure you want to reset?')) {
+            resetGame();
+          }
+        }}
+      >
+        Reset game
       </Button>
-      <Button onClick={() => nextTurn()}>Skip turn</Button>
     </Box>
   );
 };

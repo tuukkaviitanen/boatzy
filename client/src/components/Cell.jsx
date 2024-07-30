@@ -1,4 +1,4 @@
-import { TableCell, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 const styles = {
   cell: {
@@ -12,9 +12,9 @@ const styles = {
 
 function Cell(params) {
   return (
-    <TableCell sx={styles.cell}>
+    <Box component="td" sx={styles.cell}>
       <Typography>{params.children}</Typography>
-    </TableCell>
+    </Box>
   );
 }
 
