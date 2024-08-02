@@ -1,4 +1,4 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
@@ -59,11 +59,17 @@ function Board() {
   function renderValueOption(userIndex, rowIndex, selectable, user) {
     const value = rows[rowIndex].rule(dices, user.column);
     return selectable ? (
-      <Button onClick={() => onCellClicked(userIndex, rowIndex, value)}>
+      <Button
+        component={motion.button}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => onCellClicked(userIndex, rowIndex, value)}
+      >
         {value}
       </Button>
     ) : (
-      <>{value}</>
+      <Typography>{value}</Typography>
     );
   }
 
@@ -72,13 +78,17 @@ function Board() {
     const isRoundActive = turn === userIndex;
     const isGenerated = rows[rowIndex].generated;
 
+    const valueText = <Typography>{value}</Typography>;
+
     return (
       <Cell key={user.id}>
-        {value ??
-          ((isGenerated &&
-            renderValueOption(userIndex, rowIndex, false, user)) ||
-            (isRoundActive &&
-              renderValueOption(userIndex, rowIndex, true, user)))}
+        {value !== null
+          ? valueText
+          : isGenerated
+            ? renderValueOption(userIndex, rowIndex, false, user)
+            : isRoundActive
+              ? renderValueOption(userIndex, rowIndex, true, user)
+              : null}
       </Cell>
     );
   }
@@ -91,14 +101,18 @@ function Board() {
             <tr>
               <Cell />
               {users.map((user) => (
-                <Cell key={user.id}>{user.name}</Cell>
+                <Cell key={user.id}>
+                  <Typography>{user.name}</Typography>
+                </Cell>
               ))}
             </tr>
             {rows.map((row, rowIndex) => {
               return (
                 <tr key={row.name}>
                   <Cell>
-                    <TextWithInlineDice>{row.title}</TextWithInlineDice>
+                    <Typography>
+                      <TextWithInlineDice>{row.title}</TextWithInlineDice>
+                    </Typography>
                   </Cell>
                   {users.map((user, userIndex) =>
                     renderValueCell(user, rowIndex, userIndex),
