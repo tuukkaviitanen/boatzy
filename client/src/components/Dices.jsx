@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import DiceButton from './DiceButton';
 import { useContext } from 'react';
 import { DiceContext } from '../contexts/DiceContext';
+import { motion } from 'framer-motion';
 
 const styles = {
   container: {
@@ -16,7 +17,13 @@ const Dices = () => {
   const [dices] = useContext(DiceContext);
 
   return (
-    <Box sx={styles.container}>
+    <Box
+      component={motion.div}
+      sx={styles.container}
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 100 }}
+    >
       {dices.map((_, index) => (
         <DiceButton key={index} index={index} />
       ))}

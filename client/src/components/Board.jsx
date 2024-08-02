@@ -1,8 +1,10 @@
 import { Box, Button } from '@mui/material';
+import { useContext, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
 import Cell from './Cell';
 import TextWithInlineDice from './TextWithInlineDice';
 import rows from '../utils/rows';
-import { useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { DiceContext } from '../contexts/DiceContext';
 import { GameContext } from '../contexts/GameContext';
@@ -82,7 +84,7 @@ function Board() {
   }
 
   return (
-    <Box sx={styles.container}>
+    <Box component={motion.div} layout sx={styles.container}>
       <Box sx={styles.innerContainer}>
         <table style={styles.table}>
           <tbody>
