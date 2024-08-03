@@ -8,6 +8,7 @@ import rows from '../utils/rows';
 import { UserContext } from '../contexts/UserContext';
 import { DiceContext } from '../contexts/DiceContext';
 import { GameContext } from '../contexts/GameContext';
+import { PopoverContext } from '../contexts/PopoverContext';
 
 const styles = {
   container: {
@@ -31,6 +32,12 @@ const styles = {
     width: '100%',
     height: '100%',
   },
+  columnHeader: {
+    textTransform: 'none',
+    fontWeight: '900',
+    px: 1,
+    fontSize: 15
+  },
   rowHeaderText: {
     px: 1,
     minWidth: 70,
@@ -42,8 +49,9 @@ const maxInputRows = rows.filter((row) => !row.generated).length;
 function Board() {
   const [users, { setUserValue, resetUsers }] = useContext(UserContext);
   const [dices, { resetDices }] = useContext(DiceContext);
-  const [{ turn, round }, { nextTurn, endGame }] = useContext(GameContext);
-
+  const [{ turn, round, gameEnded }, { nextTurn, endGame }] =
+    useContext(GameContext);
+  const [, { setUserPopover }] = useContext(PopoverContext);
   const currentUser = users[turn];
 
   const userFilledCells = (user) =>
@@ -52,10 +60,10 @@ function Board() {
   useEffect(() => {
     if (users.every((user) => userFilledCells(user) >= maxInputRows)) {
       endGame();
-    } else if (userFilledCells(currentUser) >= maxInputRows) {
+    } else if (!currentUser || userFilledCells(currentUser) >= maxInputRows) {
       nextTurn();
     }
-  }, [currentUser, endGame, nextTurn, resetUsers, users]);
+  }, [currentUser, endGame, nextTurn, resetUsers, turn, users]);
 
   const onCellClicked = (userIndex, rowIndex, value) => {
     setUserValue(userIndex, rowIndex, value);
@@ -64,6 +72,11 @@ function Board() {
     if (round <= userFilledCells(users[userIndex])) {
       nextTurn();
     }
+  };
+
+  const onUserClicked = (event, userIndex) => {
+    const clickedElement = event.target;
+    setUserPopover(clickedElement, userIndex);
   };
 
   function renderValueOption(userIndex, rowIndex, selectable, user) {
@@ -111,9 +124,21 @@ function Board() {
           <tbody>
             <tr>
               <Cell />
-              {users.map((user) => (
+              {users.map((user, index) => (
                 <Cell key={user.id}>
-                  <Typography>{user.name}</Typography>
+                  {gameEnded ? (
+                    <Typography sx={styles.columnHeader}>
+                      {user.name}
+                    </Typography>
+                  ) : (
+                    <Button
+                      sx={{ ...styles.cellButton, ...styles.columnHeader }}
+                      onClick={(event) => onUserClicked(event, index)}
+                      disabled={gameEnded}
+                    >
+                      {user.name}
+                    </Button>
+                  )}
                 </Cell>
               ))}
             </tr>

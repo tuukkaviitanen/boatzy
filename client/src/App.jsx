@@ -8,6 +8,7 @@ import Buttons from './components/Buttons';
 import { useContext } from 'react';
 import { GameContext } from './contexts/GameContext';
 import { AnimatePresence } from 'framer-motion';
+import UserPopover from './components/UserPopover';
 
 const styles = {
   appContainer: {
@@ -23,15 +24,19 @@ const App = () => {
   const [{ gameEnded }] = useContext(GameContext);
 
   return (
-    <Container sx={styles.appContainer}>
-      <AnimatePresence>
-        <Title key="title" />
-        <Buttons key="buttons" />
-        <Board key="board" />
-        {!gameEnded && <Dices key="dices" />}
-        {gameEnded && <Fireworks key="fireworks" autorun={{ speed: 1 }} />}
-      </AnimatePresence>
-    </Container>
+    <>
+      <Container sx={styles.appContainer}>
+        <AnimatePresence>
+          <Title key="title" />
+          <Buttons key="buttons" />
+          <Board key="board" />
+          {!gameEnded && <Dices key="dices" />}
+          {gameEnded && <Fireworks key="fireworks" autorun={{ speed: 1 }} />}
+        </AnimatePresence>
+      </Container>
+
+      <UserPopover />
+    </>
   );
 };
 
