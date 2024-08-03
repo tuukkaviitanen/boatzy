@@ -25,6 +25,7 @@ const Buttons = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
               key="add"
               component={motion.button}
               onClick={() => createUser(`Player ${users.length + 1}`)}
@@ -35,6 +36,7 @@ const Buttons = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
               key="skip"
               component={motion.button}
               onClick={() => nextTurn()}

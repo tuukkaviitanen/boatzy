@@ -29,7 +29,7 @@ const App = () => {
         <Buttons key="buttons" />
         <Board key="board" />
         {!gameEnded && <Dices key="dices" />}
-        {gameEnded && <Fireworks key="fireworks" autorun={{ speed: 2 }} />}
+        {gameEnded && <Fireworks key="fireworks" autorun={{ speed: 1 }} />}
       </AnimatePresence>
     </Container>
   );

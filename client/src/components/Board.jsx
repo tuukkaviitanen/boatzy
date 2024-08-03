@@ -20,10 +20,19 @@ const styles = {
   innerContainer: {
     overflow: 'auto',
     scrollbarWidth: 'thin',
-    py: 1,
   },
   table: {
     borderSpacing: '0',
+    border: '1px solid black',
+    borderCollapse: 'collapse',
+  },
+  cellButton: {
+    p: 0,
+    width: '100%',
+    height: '100%',
+  },
+  rowHeaderText: {
+    px: 1,
   },
 };
 
@@ -64,6 +73,7 @@ function Board() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
+        sx={styles.cellButton}
         onClick={() => onCellClicked(userIndex, rowIndex, value)}
       >
         {value}
@@ -110,7 +120,7 @@ function Board() {
               return (
                 <tr key={row.name}>
                   <Cell>
-                    <Typography>
+                    <Typography sx={styles.rowHeaderText}>
                       <TextWithInlineDice>{row.title}</TextWithInlineDice>
                     </Typography>
                   </Cell>
