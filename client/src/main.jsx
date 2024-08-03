@@ -9,13 +9,16 @@ import '@fontsource/roboto/700.css';
 import { DiceContextProvider } from './contexts/DiceContext';
 import { UserContextProvider } from './contexts/UserContext';
 import { GameContextProvider } from './contexts/GameContext';
+import { PopoverContextProvider } from './contexts/PopoverContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <DiceContextProvider>
       <UserContextProvider>
         <GameContextProvider>
-          <App />
+          <PopoverContextProvider>
+            <App />
+          </PopoverContextProvider>
         </GameContextProvider>
       </UserContextProvider>
     </DiceContextProvider>
