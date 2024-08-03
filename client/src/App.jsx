@@ -7,6 +7,7 @@ import Dices from './components/Dices';
 import Buttons from './components/Buttons';
 import { useContext } from 'react';
 import { GameContext } from './contexts/GameContext';
+import { AnimatePresence } from 'framer-motion';
 
 const styles = {
   appContainer: {
@@ -14,6 +15,7 @@ const styles = {
     width: '100vw',
     display: 'flex',
     flexDirection: 'column',
+    overflow: 'hidden',
   },
 };
 
@@ -22,11 +24,13 @@ const App = () => {
 
   return (
     <Container sx={styles.appContainer}>
-      <Title />
-      <Buttons />
-      <Board />
-      {!gameEnded && <Dices />}
-      {gameEnded && <Fireworks autorun={{ speed: 2 }} />}
+      <AnimatePresence>
+        <Title key="title" />
+        <Buttons key="buttons" />
+        <Board key="board" />
+        {!gameEnded && <Dices key="dices" />}
+        {gameEnded && <Fireworks key="fireworks" autorun={{ speed: 1 }} />}
+      </AnimatePresence>
     </Container>
   );
 };

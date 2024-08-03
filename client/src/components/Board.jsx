@@ -1,8 +1,10 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import { useContext, useEffect } from 'react';
+import { motion } from 'framer-motion';
+
 import Cell from './Cell';
 import TextWithInlineDice from './TextWithInlineDice';
 import rows from '../utils/rows';
-import { useContext, useEffect } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { DiceContext } from '../contexts/DiceContext';
 import { GameContext } from '../contexts/GameContext';
@@ -18,10 +20,20 @@ const styles = {
   innerContainer: {
     overflow: 'auto',
     scrollbarWidth: 'thin',
-    py: 1,
   },
   table: {
     borderSpacing: '0',
+    border: '1px solid black',
+    borderCollapse: 'collapse',
+  },
+  cellButton: {
+    p: 0,
+    width: '100%',
+    height: '100%',
+  },
+  rowHeaderText: {
+    px: 1,
+    minWidth: 70,
   },
 };
 
@@ -57,11 +69,18 @@ function Board() {
   function renderValueOption(userIndex, rowIndex, selectable, user) {
     const value = rows[rowIndex].rule(dices, user.column);
     return selectable ? (
-      <Button onClick={() => onCellClicked(userIndex, rowIndex, value)}>
+      <Button
+        component={motion.button}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        sx={styles.cellButton}
+        onClick={() => onCellClicked(userIndex, rowIndex, value)}
+      >
         {value}
       </Button>
     ) : (
-      <>{value}</>
+      <Typography>{value}</Typography>
     );
   }
 
@@ -70,33 +89,41 @@ function Board() {
     const isRoundActive = turn === userIndex;
     const isGenerated = rows[rowIndex].generated;
 
+    const valueText = <Typography>{value}</Typography>;
+
     return (
       <Cell key={user.id}>
-        {value ??
-          ((isGenerated &&
-            renderValueOption(userIndex, rowIndex, false, user)) ||
-            (isRoundActive &&
-              renderValueOption(userIndex, rowIndex, true, user)))}
+        {value !== null
+          ? valueText
+          : isGenerated
+            ? renderValueOption(userIndex, rowIndex, false, user)
+            : isRoundActive
+              ? renderValueOption(userIndex, rowIndex, true, user)
+              : null}
       </Cell>
     );
   }
 
   return (
-    <Box sx={styles.container}>
+    <Box component={motion.div} layout sx={styles.container}>
       <Box sx={styles.innerContainer}>
         <table style={styles.table}>
           <tbody>
             <tr>
               <Cell />
               {users.map((user) => (
-                <Cell key={user.id}>{user.name}</Cell>
+                <Cell key={user.id}>
+                  <Typography>{user.name}</Typography>
+                </Cell>
               ))}
             </tr>
             {rows.map((row, rowIndex) => {
               return (
                 <tr key={row.name}>
                   <Cell>
-                    <TextWithInlineDice>{row.title}</TextWithInlineDice>
+                    <Typography sx={styles.rowHeaderText}>
+                      <TextWithInlineDice>{row.title}</TextWithInlineDice>
+                    </Typography>
                   </Cell>
                   {users.map((user, userIndex) =>
                     renderValueCell(user, rowIndex, userIndex),

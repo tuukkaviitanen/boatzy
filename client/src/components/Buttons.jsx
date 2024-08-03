@@ -2,6 +2,7 @@ import { Box, Button } from '@mui/material';
 import { useContext } from 'react';
 import { UserContext } from '../contexts/UserContext';
 import { GameContext } from '../contexts/GameContext';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const styles = {
   container: {
@@ -17,24 +18,47 @@ const Buttons = () => {
 
   return (
     <Box sx={styles.container}>
-      {!game.gameEnded && (
-        <>
-          <Button onClick={() => createUser(`Player ${users.length + 1}`)}>
-            Add player
-          </Button>
-          <Button onClick={() => nextTurn()}>Skip turn</Button>
-        </>
-      )}
+      <AnimatePresence initial={false}>
+        {!game.gameEnded && (
+          <>
+            <Button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              key="add"
+              component={motion.button}
+              onClick={() => createUser(`Player ${users.length + 1}`)}
+            >
+              Add player
+            </Button>
+            <Button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              key="skip"
+              component={motion.button}
+              onClick={() => nextTurn()}
+            >
+              Skip turn
+            </Button>
+          </>
+        )}
 
-      <Button
-        onClick={() => {
-          if (confirm('Are you sure you want to reset?')) {
-            resetGame();
-          }
-        }}
-      >
-        Reset game
-      </Button>
+        <Button
+          key="reset"
+          component={motion.button}
+          layout
+          onClick={() => {
+            if (confirm('Are you sure you want to reset?')) {
+              resetGame();
+            }
+          }}
+        >
+          Reset game
+        </Button>
+      </AnimatePresence>
     </Box>
   );
 };
