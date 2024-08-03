@@ -36,7 +36,7 @@ const styles = {
     textTransform: 'none',
     fontWeight: '900',
     px: 1,
-    fontSize: 15
+    fontSize: 15,
   },
   rowHeaderText: {
     px: 1,
@@ -134,7 +134,6 @@ function Board() {
                     <Button
                       sx={{ ...styles.cellButton, ...styles.columnHeader }}
                       onClick={(event) => onUserClicked(event, index)}
-                      disabled={gameEnded}
                     >
                       {user.name}
                     </Button>
