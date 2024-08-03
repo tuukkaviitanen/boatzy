@@ -33,6 +33,7 @@ const styles = {
   },
   rowHeaderText: {
     px: 1,
+    minWidth: 70,
   },
 };
 
