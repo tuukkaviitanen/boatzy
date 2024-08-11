@@ -17,7 +17,7 @@ const Buttons = () => {
   const [game, { nextTurn, resetGame }] = useContext(GameContext);
 
   return (
-    <Box sx={styles.container}>
+    <Box sx={styles.container} data-testid="buttons-container">
       <AnimatePresence initial={false}>
         {!game.gameEnded && (
           <>
