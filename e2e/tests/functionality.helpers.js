@@ -38,9 +38,9 @@ export const checkDiceFunctionality = async (expect, button) => {
 
 /**
  * @param {import("playwright-core").Page} page
- * @returns {Promise<import("playwright-core").Locator>} Promise for cells locator
+ * @returns Cells locator
  */
-export const getUserColumnCells = async (page) => {
+export const getUserColumnCells = (page) => {
   const board = page.getByTestId(/board/);
 
   const firstRow = board.getByRole('row').first();
@@ -65,7 +65,32 @@ export const submitNewName = async (page, newName) => {
   userPopover.getByTestId('submit-button').click();
 };
 
+/**
+ * @param {import("playwright-core").Page} page
+ * @param {number} diceIndex Index of the selected dice
+ * @param {number} diceValue Value from 1 to 6
+ */
+export const clickDiceTimes = async (page, diceIndex, diceValue) => {
+  const dicesContainer = page.getByTestId(/dices-container/);
+  const diceButtons = dicesContainer.getByRole('button');
+  const selectedDiceButton = diceButtons.nth(diceIndex);
 
-export const deleteUser = async (page) => {
+  for (const _ of Array.from({ length: diceValue })) {
+    await selectedDiceButton.click();
+  }
+};
 
-}
+/**
+ * @param {import("playwright-core").Page} page
+ * @param {number} rowIndex
+ * @param {number} columnIndex
+ */
+export const getCell = (page, rowIndex, columnIndex) => {
+  const board = page.getByTestId(/board/);
+  const rows = board.getByRole('row');
+  const selectedRow = rows.nth(rowIndex);
+  const selectedRowCells = selectedRow.getByRole('cell');
+  const selectedCell = selectedRowCells.nth(columnIndex);
+
+  return selectedCell;
+};
