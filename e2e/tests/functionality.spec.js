@@ -26,7 +26,7 @@ test.describe('Functionality', () => {
   test.describe('Menu buttons', () => {
     test.describe('Add player button', () => {
       test('should add player successfully', async ({ page }) => {
-        const userColumnCells = await getUserColumnCells(page);
+        const userColumnCells = getUserColumnCells(page);
 
         // Make sure the initial number of columns is as expected
         await expect(userColumnCells).toHaveCount(3);
@@ -98,8 +98,8 @@ test.describe('Functionality', () => {
         await submitNewName(page, 'Test user 1');
 
         // Check player name and count has changed
-        await expect(getUserColumnCells(page)).toHaveCount(4)
-        await expect(getUserColumnCells(page).nth(1)).toHaveText("Test user 1")
+        await expect(getUserColumnCells(page)).toHaveCount(4);
+        await expect(getUserColumnCells(page).nth(1)).toHaveText('Test user 1');
 
         // Reset game
         await page.getByText(/Reset game/i).click();
@@ -111,8 +111,8 @@ test.describe('Functionality', () => {
         await expect(getCell(page, 2, 2)).toHaveText('');
 
         // Check that amount of players and names have reset
-        await expect(getUserColumnCells(page)).toHaveCount(3)
-        await expect(getUserColumnCells(page).nth(1)).toHaveText("Player 1")
+        await expect(getUserColumnCells(page)).toHaveCount(3);
+        await expect(getUserColumnCells(page).nth(1)).toHaveText('Player 1');
       });
     });
   });
