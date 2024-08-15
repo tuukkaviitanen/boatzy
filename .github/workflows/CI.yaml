@@ -35,6 +35,17 @@ jobs:
         working-directory: ./client
         run: npm run build
 
+      - name: Start build app for tests
+        working-directory: ./client
+        run: npm run preview &
+
+      - name: Run E2E tests
+        working-directory: ./e2e
+        env:
+            BASE_URL: http://localhost:4173
+        run: npm test
+
+
   tag_release:
     needs: ["verification"]
     if: ${{ github.event_name == 'push' }}
