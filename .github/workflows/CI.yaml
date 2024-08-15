@@ -11,7 +11,6 @@ on:
 jobs:
   verification:
     runs-on: ubuntu-latest
-
     timeout-minutes: 5
 
     steps:
@@ -34,6 +33,40 @@ jobs:
       - name: Run Build
         working-directory: ./client
         run: npm run build
+
+      - name: Upload build as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: client/dist/
+          retention-days: 30
+
+      - name: Start build app for tests
+        working-directory: ./client
+        run: npm run preview &
+
+      - name: Install Playwright dependencies
+        working-directory: ./e2e
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        working-directory: ./e2e
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright E2E tests
+        working-directory: ./e2e
+        env:
+            BASE_URL: http://localhost:4173
+        run: npm test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: e2e/playwright-report/
+          retention-days: 30
+
 
   tag_release:
     needs: ["verification"]

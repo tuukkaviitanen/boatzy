@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report",
+    "test:ui": "npm test -- --ui"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.46.0",
+    "@types/node": "^22.2.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "playwright": "^1.46.0",
+    "playwright-core": "^1.46.0",
+    "undici-types": "^6.13.0"
+  }
+}

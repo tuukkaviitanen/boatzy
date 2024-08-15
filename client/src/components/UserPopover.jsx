@@ -59,7 +59,7 @@ const UserPopover = () => {
         horizontal: 'center',
       }}
     >
-      <Box sx={styles.container}>
+      <Box sx={styles.container} data-testid="user-popover">
         <Box
           component="form"
           sx={styles.renameContainer}
@@ -73,13 +73,14 @@ const UserPopover = () => {
             name="name"
             placeholder="Change name"
           />
-          <IconButton type="submit">
+          <IconButton type="submit" data-testid="submit-button">
             <CheckIcon />
           </IconButton>
           <IconButton
             type="button"
             onClick={handleDelete}
             disabled={users.length < 2}
+            data-testid="delete-button"
           >
             <DeleteIcon />
           </IconButton>

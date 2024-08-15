@@ -118,7 +118,12 @@ function Board() {
   }
 
   return (
-    <Box component={motion.div} layout sx={styles.container}>
+    <Box
+      component={motion.div}
+      layout
+      sx={styles.container}
+      data-testid="board"
+    >
       <Box sx={styles.innerContainer}>
         <table style={styles.table}>
           <tbody>
