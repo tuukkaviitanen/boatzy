@@ -5,35 +5,35 @@
 export const checkDiceFunctionality = async (expect, button) => {
   const diceImage = button.getByRole('img');
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-zero.svg');
+  await expect(diceImage).toHaveScreenshot("dice-zero.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-one.svg');
+  await expect(diceImage).toHaveScreenshot("dice-one.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-two.svg');
+  await expect(diceImage).toHaveScreenshot("dice-two.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-three.svg');
+  await expect(diceImage).toHaveScreenshot("dice-three.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-four.svg');
+  await expect(diceImage).toHaveScreenshot("dice-four.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-five.svg');
+  await expect(diceImage).toHaveScreenshot("dice-five.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-six.svg');
+  await expect(diceImage).toHaveScreenshot("dice-six.png");
 
   await button.click();
 
-  await expect(diceImage).toHaveAttribute('src', '/src/assets/dice-zero.svg');
+  await expect(diceImage).toHaveScreenshot("dice-zero.png");
 };
 
 /**

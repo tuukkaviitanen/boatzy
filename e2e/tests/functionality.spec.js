@@ -37,8 +37,8 @@ test.describe('Functionality', () => {
           const expectedUserName = `Player ${index + 3}`;
 
           await page.getByText(/Add player/i).click();
-          expect(userColumnCells).toHaveCount(expectedColumnCount);
-          expect(userColumnCells.last()).toHaveText(expectedUserName);
+          await expect(userColumnCells).toHaveCount(expectedColumnCount);
+          await expect(userColumnCells.last()).toHaveText(expectedUserName);
         }
       });
     });
@@ -49,18 +49,18 @@ test.describe('Functionality', () => {
         const firstInputRow = board.getByRole('row').nth(1);
         const firstInputRowCells = firstInputRow.getByRole('cell');
 
-        expect(firstInputRowCells.nth(1)).toHaveText('0');
-        expect(firstInputRowCells.nth(2)).not.toHaveText('0');
+        await  expect(firstInputRowCells.nth(1)).toHaveText('0');
+        await expect(firstInputRowCells.nth(2)).not.toHaveText('0');
 
         await page.getByText(/Skip turn/i).click();
 
-        expect(firstInputRowCells.nth(1)).not.toHaveText('0');
-        expect(firstInputRowCells.nth(2)).toHaveText('0');
+        await expect(firstInputRowCells.nth(1)).not.toHaveText('0');
+        await expect(firstInputRowCells.nth(2)).toHaveText('0');
 
         await page.getByText(/Skip turn/i).click();
 
-        expect(firstInputRowCells.nth(1)).toHaveText('0');
-        expect(firstInputRowCells.nth(2)).not.toHaveText('0');
+        await expect(firstInputRowCells.nth(1)).toHaveText('0');
+        await expect(firstInputRowCells.nth(2)).not.toHaveText('0');
       });
     });
 
@@ -143,15 +143,15 @@ test.describe('Functionality', () => {
         await userColumnCells.nth(2).click();
         await submitNewName(page, 'Test user 2');
 
-        expect(userColumnCells.nth(1)).toHaveText('Test user 1');
-        expect(userColumnCells.nth(2)).toHaveText('Test user 2');
+        await expect(userColumnCells.nth(1)).toHaveText('Test user 1');
+        await expect(userColumnCells.nth(2)).toHaveText('Test user 2');
       });
 
       test('should successfully delete user', async ({ page }) => {
         const userColumnCells = getUserColumnCells(page);
 
-        expect(userColumnCells).toHaveCount(3);
-        expect(userColumnCells.nth(1)).toHaveText('Player 1');
+        await expect(userColumnCells).toHaveCount(3);
+        await expect(userColumnCells.nth(1)).toHaveText('Player 1');
 
         await userColumnCells.nth(1).click();
 
@@ -161,8 +161,8 @@ test.describe('Functionality', () => {
 
         const updatedColumnCells = getUserColumnCells(page);
 
-        expect(updatedColumnCells).toHaveCount(2);
-        expect(updatedColumnCells.nth(1)).toHaveText('Player 2');
+        await expect(updatedColumnCells).toHaveCount(2);
+        await expect(updatedColumnCells.nth(1)).toHaveText('Player 2');
       });
 
       test('should not delete last user', async ({ page }) => {

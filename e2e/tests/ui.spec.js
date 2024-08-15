@@ -66,12 +66,7 @@ test.describe('UI', () => {
       const dicesContainer = page.getByTestId(/dices-container/);
 
       for (const image of await dicesContainer.getByRole('img').all()) {
-        const isLoaded = await image.evaluate(
-          // @ts-ignore // Won't break anything if "complete" or "naturalHeight" properties don't exists, the tests just fail as they should
-          (img) => img.complete && img.naturalHeight !== 0
-        );
-        expect(isLoaded).toBeTruthy();
-        await expect(image).toHaveAttribute('src', '/src/assets/dice-zero.svg');
+        await expect(image).toHaveScreenshot("dice-zero.png");
       }
     });
   });
