@@ -56,7 +56,7 @@ jobs:
       - name: Run Playwright E2E tests
         working-directory: ./e2e
         env:
-            BASE_URL: http://localhost:4173
+          BASE_URL: http://localhost:4173
         run: npm test
 
       - name: Upload Playwright report
@@ -66,7 +66,6 @@ jobs:
           name: playwright-report
           path: e2e/playwright-report/
           retention-days: 30
-
 
   tag_release:
     needs: ["verification"]
@@ -105,6 +104,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Set up QEMU for cross-platform builds
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
       # https://github.com/docker/setup-buildx-action
@@ -131,6 +134,7 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.tag_release.outputs.version }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           push: true
+          platforms: linux/amd64,linux/arm64
 
   deploy_to_render:
     needs: [tag_release]
