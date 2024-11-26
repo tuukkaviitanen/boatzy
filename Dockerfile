@@ -1,4 +1,4 @@
-FROM node:22 AS build
+FROM node:22-alpine AS build
 
 ENV NODE_ENV=production
 
@@ -12,9 +12,8 @@ COPY ./client/ ./
 
 RUN npm run build
 
-# Final image
-FROM nginx:1.27-alpine
+FROM caddy:2.9-alpine AS final-stage
 
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --from=build /app/dist /srv
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+CMD [ "caddy", "file-server" ]
